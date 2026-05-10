@@ -213,8 +213,8 @@ Responsibilities:
 
 Deployment options:
 
-- Docker Compose on VPS
-- Docker Compose for local development
+- Docker Compose and Traefik on VPS
+- Docker Compose and Traefik for local development
 - Vercel, optional later if a managed frontend deployment is useful
 - Static export where dynamic revalidation is not required
 
@@ -223,17 +223,20 @@ Deployment options:
 Recommended initial deployment:
 
 ```text
+Local
+- Traefik
+- web-gateway Docker network
+- gdcms web container
+- Host routing such as gdcms.localhost
+
 Xserver VPS
-- Backend API
-- Google API integration
-- Sync worker
-- Cache
-- Next.js frontend
-- Static page delivery
-- Docker Compose runtime
+- Existing Traefik
+- Existing web-gateway Docker network
+- gdcms web container
+- Production domain routing
 ```
 
-The initial production target is a single VPS-hosted Docker Compose deployment. The backend remains the integration hub. The frontend stays lightweight and presentation-focused.
+The initial target is a Docker Compose deployment routed through Traefik in both local and production environments. This keeps local development close to production and avoids per-app host port management.
 
 The frontend and backend can be split later if deployment or scaling requirements justify it.
 
@@ -420,12 +423,39 @@ The project should keep the full architecture in view while building from the sm
 - Define environment variables before implementing API calls.
 - Add a minimal local development command.
 - Add Docker and Docker Compose files before the first runnable MVP.
+- Route the local app through Traefik using `gdcms.localhost`.
 
 Goal:
 
 ```text
 The repository can be public from day one without leaking secrets.
 ```
+
+### Phase 0 Execution Checklist
+
+Work through these items one at a time.
+
+1. Commit the current documentation updates about Docker and Traefik.
+2. Scaffold the Next.js application in the repository root.
+3. Add Docker runtime files:
+   - `Dockerfile`
+   - `.dockerignore`
+   - `compose.yaml`
+   - `compose.local.yaml`
+   - `compose.prod.yaml`
+4. Configure local Traefik routing:
+   - Join the external `web-gateway` network.
+   - Route the `gdcms.localhost` hostname to the Next.js container.
+   - Do not publish `3000:3000` directly from the app container.
+5. Add a minimal landing page that communicates the product concept.
+6. Verify local access through:
+
+```text
+http://gdcms.localhost
+```
+
+7. Commit and push the runnable Docker + Traefik foundation.
+8. Only after the runtime foundation works, start Google API integration.
 
 ### Phase 1: Manual Data Pipeline
 

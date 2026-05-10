@@ -56,10 +56,12 @@ gdcms is intended to be developed and deployed with Docker.
 
 Initial runtime target:
 
-- Local development with Docker Compose
-- VPS deployment with Docker Compose
+- Local development with Docker Compose and Traefik
+- VPS deployment with Docker Compose and Traefik
 - Environment variables supplied outside Git
 - No committed secrets or service account JSON files
+
+Local and production should stay as close as possible. The app should be routed through Traefik in both environments, using hostnames such as `gdcms.localhost` locally and the production domain on the VPS.
 
 ## Content Model
 

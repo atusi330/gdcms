@@ -38,6 +38,7 @@ Planned stack:
 - Static generation / ISR
 - Service Account authentication
 - Docker / Docker Compose
+- Traefik
 
 Docker is the default runtime strategy.
 
@@ -45,6 +46,8 @@ Use Docker Compose for:
 
 - Local development
 - VPS deployment
+
+Use Traefik in both local and production where practical. Local development should be routed through a hostname such as `gdcms.localhost`, and production should use the existing VPS Traefik setup.
 
 Vercel is optional later, not the primary deployment target.
 
@@ -173,6 +176,20 @@ When implementation begins, add:
 The compose setup should run the app locally without requiring global Node tooling beyond Docker.
 
 Keep secrets outside compose files. Use environment files locally and deployment secrets on the VPS.
+
+Prefer Traefik labels over direct host port publishing for app traffic.
+
+Local target:
+
+```text
+http://gdcms.localhost
+```
+
+Production target:
+
+```text
+https://<production-domain>
+```
 
 ## Documentation Rules
 

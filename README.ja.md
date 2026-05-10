@@ -56,10 +56,12 @@ gdcmsはDockerで構築・運用する前提です。
 
 初期の実行環境:
 
-- Docker Composeでローカル開発
-- Docker ComposeでVPSデプロイ
+- Docker Compose + Traefikでローカル開発
+- Docker Compose + TraefikでVPSデプロイ
 - 環境変数はGitの外で管理
 - 秘密情報やService AccountのJSONファイルはコミットしない
+
+ローカルと本番の構成は、できるだけ近づけます。ローカルでも本番でもTraefik経由でアプリにアクセスし、ローカルでは `gdcms.localhost`、本番では本番ドメインを使う方針です。
 
 ## コンテンツモデル
 

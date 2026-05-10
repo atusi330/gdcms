@@ -22,7 +22,7 @@ gdcmsは、Google DriveをヘッドレスCMSのバックエンドとして使い
 - Google Docs: 記事や固定ページの本文
 - Google Sheets: 公開状態、メタデータ、デザイン制御
 - Next.js: 公開サイトの表示
-- Docker Compose: ローカル開発とVPSデプロイ
+- Docker Compose + Traefik: ローカル開発とVPSデプロイ
 
 ## なぜGoogle Driveを使うのか
 
@@ -136,7 +136,7 @@ GitHubにpushすると自動でビルドして公開でき、Next.jsとの相性
 
 ## Docker前提にする理由
 
-gdcmsはDocker Composeで構築・運用する前提です。
+gdcmsはDocker ComposeとTraefikで構築・運用する前提です。
 
 理由:
 
@@ -144,6 +144,8 @@ gdcmsはDocker Composeで構築・運用する前提です。
 - Next.jsや将来のAPIサーバーを同じ構成で動かしやすい
 - VPSにそのまま持っていける
 - 将来的に同期ワーカーやキャッシュを増やしやすい
+- 各アプリのポート番号ではなくホスト名でアクセスできる
+- 本番のTraefikルーティングをローカルでも確認できる
 
 初期構成では、まずNext.js単体のコンテナから始めます。
 
@@ -174,6 +176,34 @@ Vercelは公開が楽です。
 Docker/VPSは自分で制御しやすく、Google API連携や同期処理を含めた運用に向いています。
 
 gdcmsではDocker/VPSを主線にします。
+
+## Traefikを使う理由
+
+ローカルでも本番でもTraefikを使う方針です。
+
+理由:
+
+- ネコフリークスがVPS上ですでにTraefikで動いている
+- gdcmsも同じVPSに同居させる想定
+- 80番/443番を複数アプリで直接取り合わなくて済む
+- Docker labelsでアプリごとのルーティングを定義できる
+- ローカルと本番を近い構成にできる
+
+ローカルでは次のようにアクセスする想定です。
+
+```text
+http://gdcms.localhost
+```
+
+本番では次のように本番ドメインをTraefikに割り当てます。
+
+```text
+https://gdcms.example.com
+```
+
+この構成では、gdcmsコンテナの内部ポートはNext.js標準の`3000`を使い、ホスト側に`3000:3000`のようなポート公開はしません。
+
+Traefikがホスト名を見て、該当するコンテナにリクエストを流します。
 
 ## 実装順の考え方
 
@@ -257,7 +287,7 @@ gdcmsでは、コードを閉じるよりも思想と実装を先に公開し、
 - Google Docsは本文
 - Google Sheetsは公開制御とメタデータ
 - Next.jsで表示する
-- Docker Composeで構築・運用する
+- Docker Compose + Traefikで構築・運用する
 - Service AccountでGoogle APIにアクセスする
 - ZodでSheetsの値を検証する
 - HTMLはサニタイズする
