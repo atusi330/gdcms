@@ -153,7 +153,6 @@ Google Docs由来のインラインスタイルは、そのまま信用して表
 - [コンテンツモデル](./docs/content-model.md)
 - [Google APIセットアップ](./docs/setup-google-api.md)
 - [技術メモ](./docs/technical-notes.ja.md)
-- [初期構築の解説メモ](./docs/foundation-walkthrough.ja.md)
 - [エージェント向けガイド](./AGENTS.md)
 
 ## ライセンス

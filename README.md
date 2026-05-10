@@ -153,7 +153,6 @@ Additional documentation:
 - [Content model](./docs/content-model.md)
 - [Google API setup](./docs/setup-google-api.md)
 - [Technical notes, Japanese](./docs/technical-notes.ja.md)
-- [Foundation walkthrough, Japanese](./docs/foundation-walkthrough.ja.md)
 - [Agent guidance](./AGENTS.md)
 
 ## License
