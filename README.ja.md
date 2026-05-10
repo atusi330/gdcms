@@ -63,6 +63,28 @@ gdcmsはDockerで構築・運用する前提です。
 
 ローカルと本番の構成は、できるだけ近づけます。ローカルでも本番でもTraefik経由でアプリにアクセスし、ローカルでは `gdcms.localhost`、本番では本番ドメインを使う方針です。
 
+## ローカル開発
+
+Docker ComposeとTraefik経由で起動します。
+
+```bash
+docker compose -f compose.yaml -f compose.local.yaml up -d --build
+```
+
+アクセス先:
+
+```text
+http://gdcms.localhost
+```
+
+停止:
+
+```bash
+docker compose -f compose.yaml -f compose.local.yaml down
+```
+
+アプリコンテナは `3000:3000` を直接公開しません。Traefikが `gdcms.localhost` をNext.jsの内部ポートへルーティングします。
+
 ## コンテンツモデル
 
 Google Docsには記事や固定ページの本文を保存します。

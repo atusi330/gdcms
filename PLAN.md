@@ -435,27 +435,27 @@ The repository can be public from day one without leaking secrets.
 
 Work through these items one at a time.
 
-1. Commit the current documentation updates about Docker and Traefik.
-2. Scaffold the Next.js application in the repository root.
-3. Add Docker runtime files:
+- [x] Commit the current documentation updates about Docker and Traefik.
+- [x] Scaffold the Next.js application in the repository root.
+- [x] Add Docker runtime files:
    - `Dockerfile`
    - `.dockerignore`
    - `compose.yaml`
    - `compose.local.yaml`
    - `compose.prod.yaml`
-4. Configure local Traefik routing:
+- [x] Configure local Traefik routing:
    - Join the external `web-gateway` network.
    - Route the `gdcms.localhost` hostname to the Next.js container.
    - Do not publish `3000:3000` directly from the app container.
-5. Add a minimal landing page that communicates the product concept.
-6. Verify local access through:
+- [x] Add a minimal landing page that communicates the product concept.
+- [x] Verify local access through:
 
 ```text
 http://gdcms.localhost
 ```
 
-7. Commit and push the runnable Docker + Traefik foundation.
-8. Only after the runtime foundation works, start Google API integration.
+- [x] Commit and push the runnable Docker + Traefik foundation.
+- [ ] Only after the runtime foundation works, start Google API integration.
 
 ### Phase 1: Manual Data Pipeline
 

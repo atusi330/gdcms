@@ -63,6 +63,28 @@ Initial runtime target:
 
 Local and production should stay as close as possible. The app should be routed through Traefik in both environments, using hostnames such as `gdcms.localhost` locally and the production domain on the VPS.
 
+## Local Development
+
+Start the app through Docker Compose and Traefik:
+
+```bash
+docker compose -f compose.yaml -f compose.local.yaml up -d --build
+```
+
+Open:
+
+```text
+http://gdcms.localhost
+```
+
+Stop:
+
+```bash
+docker compose -f compose.yaml -f compose.local.yaml down
+```
+
+The app container does not publish `3000:3000` directly. Traefik routes `gdcms.localhost` to the internal Next.js port.
+
 ## Content Model
 
 Google Docs stores the article or page body.

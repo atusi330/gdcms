@@ -1,0 +1,17 @@
+services:
+  web:
+    build:
+      target: dev
+    image: gdcms-web:local
+    container_name: gdcms-web-local
+    command: npm run dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=web-gateway"
+      - "traefik.http.routers.gdcms-local.rule=Host(`gdcms.localhost`)"
+      - "traefik.http.routers.gdcms-local.entrypoints=web"
+      - "traefik.http.services.gdcms-local.loadbalancer.server.port=3000"

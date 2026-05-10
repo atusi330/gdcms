@@ -1,0 +1,15 @@
+services:
+  web:
+    build:
+      context: .
+    restart: unless-stopped
+    environment:
+      NEXT_TELEMETRY_DISABLED: "1"
+      PORT: "3000"
+      HOSTNAME: "0.0.0.0"
+    networks:
+      - web-gateway
+
+networks:
+  web-gateway:
+    external: true

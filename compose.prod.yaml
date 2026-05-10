@@ -1,0 +1,16 @@
+services:
+  web:
+    build:
+      target: runner
+    image: gdcms-web:prod
+    container_name: gdcms-web-prod
+    env_file:
+      - path: .env.production
+        required: false
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=web-gateway"
+      - "traefik.http.routers.gdcms-prod.rule=Host(`${GDCMS_HOST?Set GDCMS_HOST}`)"
+      - "traefik.http.routers.gdcms-prod.entrypoints=websecure"
+      - "traefik.http.routers.gdcms-prod.tls.certresolver=myresolver"
+      - "traefik.http.services.gdcms-prod.loadbalancer.server.port=3000"
